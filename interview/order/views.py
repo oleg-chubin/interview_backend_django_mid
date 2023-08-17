@@ -13,3 +13,10 @@ class OrderListCreateView(generics.ListCreateAPIView):
 class OrderTagListCreateView(generics.ListCreateAPIView):
     queryset = OrderTag.objects.all()
     serializer_class = OrderTagSerializer
+
+
+class DeactivateOrderView(generics.DestroyAPIView):
+    queryset = Order.objects.all()
+
+    def perform_destroy(self, instance: Order) -> None:
+        Order.deactivate(instance.pk)
